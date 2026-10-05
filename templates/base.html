@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block titulo %}Controle de Estoque{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% if session.usuario_id %}
+<nav>
+  <a class="marca" href="{{ url_for('index') }}">📦 Estoque</a>
+  <a href="{{ url_for('index') }}" class="{{ 'ativo' if request.endpoint == 'index' }}">Início</a>
+  <a href="{{ url_for('produtos_lista') }}" class="{{ 'ativo' if request.endpoint.startswith('produto') }}">Produtos</a>
+  <span class="espaco"></span>
+  <span>{{ session.usuario_nome }}</span>
+  <a href="{{ url_for('logout') }}">Sair</a>
+</nav>
+{% endif %}
+<main>
+  {% for categoria, texto in get_flashed_messages(with_categories=true) %}
+    <div class="msg {{ categoria }}">{{ texto }}</div>
+  {% endfor %}
+  {% block conteudo %}{% endblock %}
+</main>
+</body>
+</html>

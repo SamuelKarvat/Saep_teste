@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block titulo %}Produtos — Controle de Estoque{% endblock %}
+{% block conteudo %}
+<h1>Produtos</h1>
+<form class="barra" method="get">
+  <input name="q" value="{{ q }}" placeholder="Pesquisar por nome, categoria ou especificação…">
+  <button class="btn">Pesquisar</button>
+  {% if q %}<a class="btn sec" href="{{ url_for('produtos_lista') }}">Limpar</a>{% endif %}
+  <a class="btn" href="{{ url_for('produto_novo') }}">+ Novo produto</a>
+</form>
+
+{% if produtos %}
+<table>
+  <tr><th>Produto</th><th>Categoria</th><th class="num">Preço</th><th class="num">Qtd.</th><th class="num">Mínimo</th><th>Situação</th><th></th></tr>
+  {% for p in produtos %}
+  {% set baixo = p.quantidade < p.estoque_minimo %}
+  <tr class="{{ 'baixo' if baixo }}">
+    <td>{{ p.nome }}<br><small>{{ p.especificacoes or '' }}</small></td>
+    <td>{{ p.categoria }}</td>
+    <td class="num">R$ {{ '%.2f'|format(p.preco)|replace('.', ',') }}</td>
+    <td class="num">{{ p.quantidade }}</td>
+    <td class="num">{{ p.estoque_minimo }}</td>
+    <td>{% if baixo %}<span class="tag baixo">Estoque baixo</span>{% else %}OK{% endif %}</td>
+    <td class="acoes">
+      <a class="btn sec peq" href="{{ url_for('produto_editar', pid=p.id) }}">Editar</a>
+      <form method="post" action="{{ url_for('produto_excluir', pid=p.id) }}"
+            onsubmit="return confirm('Excluir {{ p.nome|e }}?')">
+        <button class="btn perigo peq">Excluir</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<div class="card vazio">Nenhum produto encontrado.</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,30 @@
+:root{--azul:#1f3a5f;--bg:#f4f7fb;--borda:#d7dfeb;--erro:#c92a2a;--ok:#2b8a3e;--alerta:#e8590c}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,Arial,sans-serif;background:var(--bg);color:#1b2433}
+nav{background:var(--azul);color:#fff;display:flex;align-items:center;gap:20px;padding:0 24px;height:52px}
+nav a{color:#fff;text-decoration:none;opacity:.85}nav a:hover,nav a.ativo{opacity:1;text-decoration:underline}
+nav .marca{font-weight:700;opacity:1;margin-right:12px}nav .espaco{flex:1}
+main{max-width:1000px;margin:24px auto;padding:0 16px}
+h1{margin:0 0 16px;font-size:1.5rem}
+.card{background:#fff;border:1px solid var(--borda);border-radius:8px;padding:16px;margin-bottom:20px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px}
+.cards .card{margin:0}.cards .num{font-size:1.8rem;font-weight:700;color:var(--azul)}
+.cards .num.alerta{color:var(--alerta)}.cards .rot{color:#5b6779;font-size:.9rem}
+table{width:100%;border-collapse:collapse;background:#fff}
+th,td{padding:9px 10px;border-bottom:1px solid var(--borda);text-align:left;font-size:.93rem}
+th{background:#eaf0f8;color:var(--azul)}td.num,th.num{text-align:right}
+tr.baixo td{background:#fff4e6}
+.tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.78rem;font-weight:600}
+.tag.baixo{background:#ffe8cc;color:var(--alerta)}.tag.ent{background:#d3f9d8;color:var(--ok)}.tag.sai{background:#ffe3e3;color:var(--erro)}
+.msg{padding:10px 14px;border-radius:6px;margin-bottom:12px}
+.msg.erro{background:#ffe3e3;color:var(--erro)}.msg.ok{background:#d3f9d8;color:#1b5e2b}
+form.campos label{display:block;margin:12px 0 4px;font-weight:600;font-size:.9rem}
+input,select,textarea{width:100%;padding:8px 10px;border:1px solid var(--borda);border-radius:6px;font:inherit}
+.btn{display:inline-block;background:var(--azul);color:#fff;border:0;border-radius:6px;padding:8px 16px;font:inherit;cursor:pointer;text-decoration:none}
+.btn.sec{background:#fff;color:var(--azul);border:1px solid var(--azul)}
+.btn.perigo{background:var(--erro)}.btn.peq{padding:4px 10px;font-size:.85rem}
+.barra{display:flex;gap:8px;margin-bottom:16px}.barra input{flex:1}.barra .btn{white-space:nowrap}
+.acoes{display:flex;gap:6px}.acoes form{margin:0}
+.login-box{max-width:360px;margin:80px auto}
+.login-box h1{text-align:center;color:var(--azul)}
+.vazio{color:#5b6779;padding:12px 0}

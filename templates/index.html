@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<h1>Olá, {{ session.usuario_nome }}</h1>
+
+<div class="cards">
+  <div class="card"><div class="num">{{ resumo.total_produtos }}</div><div class="rot">Produtos cadastrados</div></div>
+  <div class="card"><div class="num">{{ resumo.total_itens }}</div><div class="rot">Itens em estoque</div></div>
+  <div class="card"><div class="num">R$ {{ '{:,.2f}'.format(resumo.valor_estoque).replace(',', 'X').replace('.', ',').replace('X', '.') }}</div><div class="rot">Valor total em estoque</div></div>
+  <div class="card"><div class="num {{ 'alerta' if resumo.em_alerta }}">{{ resumo.em_alerta }}</div><div class="rot">Produtos abaixo do mínimo</div></div>
+</div>
+
+<h2>⚠️ Alertas de estoque baixo</h2>
+{% if alertas %}
+<table>
+  <tr><th>Produto</th><th>Categoria</th><th class="num">Qtd.</th><th class="num">Mínimo</th><th></th></tr>
+  {% for a in alertas %}
+  <tr class="baixo">
+    <td>{{ a.nome }}</td><td>{{ a.categoria }}</td>
+    <td class="num">{{ a.quantidade }}</td><td class="num">{{ a.estoque_minimo }}</td>
+    <td><a class="btn sec peq" href="{{ url_for('produto_editar', pid=a.id) }}">Ver</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<div class="card vazio">Nenhum produto abaixo do estoque mínimo. 👍</div>
+{% endif %}
+
+<h2>Últimas movimentações</h2>
+{% if recentes %}
+<table>
+  <tr><th>Data/hora</th><th>Produto</th><th>Tipo</th><th class="num">Qtd.</th><th>Responsável</th></tr>
+  {% for m in recentes %}
+  <tr>
+    <td>{{ m.data_hora }}</td><td>{{ m.produto }}</td>
+    <td><span class="tag {{ 'ent' if m.tipo == 'ENTRADA' else 'sai' }}">{{ m.tipo }}</span></td>
+    <td class="num">{{ m.quantidade }}</td><td>{{ m.usuario }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<div class="card vazio">Sem movimentações ainda.</div>
+{% endif %}
+{% endblock %}

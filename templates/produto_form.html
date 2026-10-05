@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block titulo %}{{ 'Novo produto' if novo else 'Editar produto' }}{% endblock %}
+{% block conteudo %}
+<h1>{{ 'Novo produto' if novo else 'Editar produto' }}</h1>
+<div class="card">
+  <form method="post" class="campos">
+    <label for="nome">Nome *</label>
+    <input id="nome" name="nome" required value="{{ produto.nome or '' }}">
+
+    <label for="categoria_id">Categoria *</label>
+    <select id="categoria_id" name="categoria_id" required>
+      <option value="">Selecione…</option>
+      {% for c in categorias %}
+      <option value="{{ c.id }}" {{ 'selected' if produto.categoria_id|string == c.id|string }}>{{ c.nome }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="especificacoes">Especificações</label>
+    <textarea id="especificacoes" name="especificacoes" rows="3">{{ produto.especificacoes or '' }}</textarea>
+
+    <label for="preco">Preço (R$) *</label>
+    <input id="preco" name="preco" type="number" step="0.01" min="0" required value="{{ produto.preco if produto.preco is not none else '' }}">
+
+    <label for="estoque_minimo">Estoque mínimo *</label>
+    <input id="estoque_minimo" name="estoque_minimo" type="number" step="1" min="0" required value="{{ produto.estoque_minimo if produto.estoque_minimo is not none else 0 }}">
+
+    {% if not novo %}
+    <label>Quantidade atual</label>
+    <input value="{{ produto.quantidade }}" disabled>
+    <small>O saldo só muda por movimentações de entrada/saída.</small>
+    {% endif %}
+
+    <p>
+      <button class="btn">Salvar</button>
+      <a class="btn sec" href="{{ url_for('produtos_lista') }}">Cancelar</a>
+    </p>
+  </form>
+</div>
+{% endblock %}
